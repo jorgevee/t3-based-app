@@ -90,7 +90,7 @@ const LoginPage = () => {
 };
 export default LoginPage;
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: any) {
   const { req } = context;
   const session = await getSession({ req });
   const providers = await getProviders();

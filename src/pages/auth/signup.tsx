@@ -84,7 +84,7 @@ const SignUp: NextPage = () => {
               Sign Up
             </button>
             <Link
-              href="/api/auth/signin"
+              href="/auth/login"
               passHref
               className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
             >

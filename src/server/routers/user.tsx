@@ -4,9 +4,8 @@ import { prisma } from '~/server/prisma';
 import { Prisma } from '@prisma/client';
 const defaultUser = Prisma.validator<Prisma.UserArgs>()({
   select: {
-    id: true,
     email: true,
-    name: true,
+    password: true,
   },
 });
 
@@ -27,6 +26,19 @@ export const userRouter = router({
         id: input.id,
       },
       select: defaultUser.select,
+    });
+    return user;
+  }),
+  update: publicProcedure.input(user).mutation(async ({ input }) => {
+    const { id, ...data } = input;
+    const user = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        name: data.name,
+      },
+      // select: defaultUser.select,
     });
     return user;
   }),

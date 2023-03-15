@@ -15,8 +15,12 @@ function DashboardMain() {
   if (session) {
     return (
       <div>
-        <DLayout title="Dashboard">
-          <p>Hello there user!</p>
+        <DLayout title="Home">
+          <div className="flex flex-col md:flex-row">
+            <p className="text-2xl font-semibold">
+              Welcome {session?.user?.name}
+            </p>
+          </div>
         </DLayout>
       </div>
     );

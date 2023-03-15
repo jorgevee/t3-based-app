@@ -24,20 +24,18 @@ export const providers: NextAuthOptions = {
       },
     }),
   ],
+  secret: process.env.JWT_SECRET,
   callbacks: {
-    async signIn(user, account, profile) {
-      return true;
-    },
     async jwt({ token, user, account, profile, isNewUser }) {
       if (user) {
         token.id = user.id;
       }
       return token;
     },
-    // async session({ session, token }) {
-    //   session.id = token.id;
-    //   return session;
-    // },
+    async session({ session, token }) {
+      session.id = token.id;
+      return session;
+    },
   },
   pages: {
     signIn: 'auth/login',

@@ -20,8 +20,8 @@ const Hero = (): JSX.Element => {
             Readymade Gluten
           </h1>
           <p className="mb-8 leading-relaxed text-lg font-medium text-gray-700">
-            Random subheading to catch the reader's attention and make them want
-            to read more about your product/service.
+            Random subheading to catch the your attention and make them want to
+            read more about your product/service.
           </p>
           <div className="flex justify-center">
             {session ? (
