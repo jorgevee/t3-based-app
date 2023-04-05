@@ -6,6 +6,8 @@ import Credentials from 'next-auth/providers/credentials';
 import { loginSchema } from '~/validation/authVal';
 import { verify } from 'argon2';
 
+const nextAuthUrl = process.env.NEXTAUTH_URL;
+
 export const providers: NextAuthOptions = {
   providers: [
     Credentials({
@@ -25,7 +27,16 @@ export const providers: NextAuthOptions = {
     }),
   ],
   secret: process.env.JWT_SECRET,
+
+  session: {
+    jwt: true,
+  },
   callbacks: {
+    authorized({ req, token }) {
+      if (token) {
+        return true;
+      }
+    },
     async jwt({ token, user, account, profile, isNewUser }) {
       if (user) {
         token.id = user.id;
@@ -33,10 +44,11 @@ export const providers: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      session.id = token.id;
+      session.user.id = token.id;
       return session;
     },
   },
+
   pages: {
     signIn: 'auth/login',
   },

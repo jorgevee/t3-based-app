@@ -10,21 +10,19 @@ function DashboardMain() {
   //   const currentUser = session.id;
   //   console.log(currentUser);
 
-  if (loading) return null;
+  if (loading) return <div className="text-center">Loading...</div>;
   //if no seession return not authorized eles return dashboard
-  if (session) {
-    return (
-      <div>
-        <DLayout title="Home">
-          <div className="flex flex-col md:flex-row">
-            <p className="text-2xl font-semibold">
-              Welcome {session?.user?.name}
-            </p>
-          </div>
-        </DLayout>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <DLayout title="Home">
+        <div className="flex flex-col md:flex-row">
+          <p className="text-2xl font-semibold">
+            Welcome {session?.user?.name}
+          </p>
+        </div>
+      </DLayout>
+    </div>
+  );
 }
 
 export default DashboardMain;

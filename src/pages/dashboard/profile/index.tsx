@@ -3,35 +3,37 @@ import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { trpc } from '~/utils/trpc';
 
+type FormData = {
+  name: string | null;
+  email: string | null;
+  password: string;
+};
+
 export default function DashboardProfile() {
   const { data: session, status } = useSession();
   const mutation = trpc.user.update.useMutation();
-  console.log(session);
 
-  const [formData, setFormData] = useState({
-    name: session?.user?.name,
-    email: session?.user?.email,
+  const [formData, setFormData] = useState<FormData>({
+    name: session?.user?.name ?? null,
+    email: session?.user?.email ?? null,
     password: '',
   });
+
   const { name, email, password } = formData;
 
-  function handleInputChange(event) {
+  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const user = await mutation.mutateAsync({
-        id: session?.id,
-        name,
-        email,
-        password,
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    await mutation.mutateAsync({
+      id: session?.user?.id,
+      name,
+      email,
+      password,
+    });
   };
 
   return (
@@ -76,6 +78,15 @@ export default function DashboardProfile() {
               value={formData.password}
               onChange={handleInputChange}
             />
+            {/* <label htmlFor="password">Confirm Password</label>
+              <input
+                type="text"
+                name="password"
+                id="password"
+                className="border-2 border-gray-300"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              /> */}
             <button
               type="submit"
               className="bg-blue-500 text-white font-semibold py-2 rounded-lg mt-4 hover:bg-blue-600"

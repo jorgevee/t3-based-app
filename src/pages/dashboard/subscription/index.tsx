@@ -52,7 +52,7 @@ export default function DashboardSettings() {
           <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8">
             {plans.map((plan) => (
               <div
-                key={plan.name}
+                key={plan.id}
                 className="bg-white rounded-lg shadow-md overflow-hidden"
               >
                 {planCard(plan)}

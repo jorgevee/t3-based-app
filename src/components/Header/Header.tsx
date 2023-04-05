@@ -7,16 +7,12 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data: session, status } = useSession();
   return (
-    <div className="bg-gray-800">
+    <div className="bg-violet-500">
       <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between flex-wrap">
           <div className="flex items-center flex-shrink-0 text-white mr-6">
             <Link href="/">
-              <p>
-                <span className="font-semibold text-xl tracking-tight">
-                  App
-                </span>
-              </p>
+              <span className="font-semibold text-xl tracking-tight">App</span>
             </Link>
           </div>
           <div className="block lg:hidden">
@@ -25,7 +21,7 @@ const Header = () => {
               className="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-400 hover:text-white hover:border-white"
             >
               <svg
-                className="fill-current h-3 w-3"
+                className="fill-current h-3 w-3 bg-white"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
               >

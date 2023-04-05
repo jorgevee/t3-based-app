@@ -14,29 +14,56 @@ export default function Contact(): JSX.Element {
       <p className="text-lg mb-8">
         Get in touch with us by filling out the form below:
       </p>
-      <form className="flex flex-col items-center" onSubmit={submission}>
-        <input
-          type="text"
-          placeholder="Name"
-          className="w-full p-2 mb-4 border border-gray-400 rounded-lg"
-          required={true}
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full p-2 mb-4 border border-gray-400 rounded-lg"
-        />
-        <textarea
-          placeholder="Message"
-          className="w-full p-2 mb-4 border border-gray-400 rounded-lg"
-        ></textarea>
-        <button
-          type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Submit
-        </button>
+      <form className="max-w-lg mx-auto py-8" onSubmit={submission}>
+        <div className="mb-6">
+          <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
+            Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            className="w-full p-2 border border-gray-400 rounded-lg"
+            required={true}
+          />
+        </div>
+
+        <div className="mb-6">
+          <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            className="w-full p-2 border border-gray-400 rounded-lg"
+          />
+        </div>
+
+        <div className="mb-6">
+          <label
+            htmlFor="message"
+            className="block text-gray-700 font-bold mb-2"
+          >
+            Message
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            className="w-full p-2 border border-gray-400 rounded-lg"
+          ></textarea>
+        </div>
+
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            className="bg-gradient-to-r from-gray-400 to-blue-500 hover:from-blue-500 hover:to-gray-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Submit
+          </button>
+        </div>
       </form>
+
       {error && <p className="text-red-500">{error}</p>}
     </div>
   );

@@ -1,24 +1,25 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { trpc } from '../../utils/trpc';
 import Link from 'next/link';
 
 const SignUp: NextPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const { data: session, status } = useSession();
-  const loading = status === 'loading';
   const router = useRouter();
+  const [FormData, setFormData] = useState({
+    email: '',
+    password: '',
+    error: '',
+    success: '',
+  });
+  const { email, password, error, success } = FormData;
 
-  //if no seession return not authorized eles return dashboard
+  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.target;
+    setFormData({ ...FormData, [name]: value });
+  }
 
-  if (loading) return null;
   const mutation = trpc.auth.signup.useMutation();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -26,19 +27,19 @@ const SignUp: NextPage = () => {
     try {
       const user = await mutation.mutateAsync({ email, password });
       router.push('/dashboard');
-      setError('');
+      FormData.success = 'User created successfully';
     } catch (error) {
-      setError(error.message);
-      setSuccess('');
+      FormData.error = error?.data?.message;
+      FormData.success = '';
     }
   };
 
   return (
     <div>
       <Head>
-        <title>Sign Up</title>
+        <title>Sign Up - MyApp</title>
         <link rel="icon" href="/favicon.ico" />
-        <meta name="description" content="Sign Up" />
+        <meta name="Sign Up Page" content="Sign Up - MyApp" />
       </Head>
 
       <main className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-50 sm:px-6 lg:px-8">
@@ -54,10 +55,11 @@ const SignUp: NextPage = () => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="email"
               type="email"
+              name="email"
               required={true}
               placeholder="Enter your email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleInputChange}
             />
           </div>
           <div className="mb-6">
@@ -71,9 +73,10 @@ const SignUp: NextPage = () => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="password"
               type="password"
+              name="password"
               placeholder="Enter your password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleInputChange}
             />
           </div>
           <div className="flex items-center justify-between">
@@ -100,3 +103,21 @@ const SignUp: NextPage = () => {
 };
 
 export default SignUp;
+export async function getServerSideProps(context: any) {
+  const { req } = context;
+  const session = req.cookies['next-auth.session-token'];
+  // const providers = await getProviders();
+  if (session) {
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {
+      // providers,
+    },
+  };
+}

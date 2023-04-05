@@ -8,8 +8,8 @@ export default function DLayout({ children, title }: any) {
         <title>Dashboard - {title} </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex flex-row">
-        <div className="w-1/4 sm:w-1/5 bg-gray-800">
+      <main className="flex flex-col sm:flex-row">
+        <div className="w-1/4 sm:w-1/5 bg-gray-100">
           <DashboardSidebar />
         </div>
         <div className="w-3/4 sm:w-4/5 bg-gray-100">

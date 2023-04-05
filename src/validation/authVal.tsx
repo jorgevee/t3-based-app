@@ -23,3 +23,12 @@ export const user = z.object({
   email: z.string().email(),
   password: z.string().min(6),
 });
+
+export const property = z.object({
+  name: z.string(),
+  description: z.string(),
+  price: z.string(),
+  // image: z.string(),
+  location: z.string(),
+  userId: z.string(),
+});

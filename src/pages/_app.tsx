@@ -5,7 +5,6 @@ import { DefaultLayout } from '~/components/DefaultLayout';
 import { trpc } from '~/utils/trpc';
 import { SessionProvider } from 'next-auth/react';
 import '~/styles/globals.css';
-
 export type NextPageWithLayout<
   TProps = Record<string, unknown>,
   TInitialProps = TProps,

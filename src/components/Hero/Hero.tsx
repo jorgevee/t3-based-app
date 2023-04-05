@@ -15,26 +15,27 @@ const Hero = (): JSX.Element => {
         </div>
         <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
           <h1 className="title-font sm:text-5xl text-4xl mb-4 font-bold text-gray-900 leading-tight">
-            Before They Sold Out,
-            <br className="hidden lg:inline-block" />
-            Readymade Gluten
+            Your Programmer
+            <br className="hidden lg:inline-block text-blue-500" />
+            Solution
           </h1>
           <p className="mb-8 leading-relaxed text-lg font-medium text-gray-700">
-            Random subheading to catch the your attention and make them want to
-            read more about your product/service.
+            Use Cometflow to quickly identify and resolve code errors, crashes,
+            and API issues. Cometflow is trusted by developers and organizations
+            to identify the most important issues and to learn from them.
           </p>
           <div className="flex justify-center">
             {session ? (
               <Link
                 href="/dashboard"
-                className="inline-flex text-white bg-blue-500 border-0 py-3 px-8 focus:outline-none hover:bg-blue-600 rounded-full text-lg font-medium"
+                className="inline-flex text-white bg-violet-500 border-0 py-3 px-8 focus:outline-none hover:bg-violet-600 rounded-full text-lg font-medium"
               >
                 Dashboard
               </Link>
             ) : (
               <Link
                 href="/auth/login"
-                className="inline-flex text-white bg-blue-500 border-0 py-3 px-8 focus:outline-none hover:bg-blue-600 rounded-full text-lg font-medium"
+                className="inline-flex text-white bg-violet-500 border-0 py-3 px-8 focus:outline-none hover:bg-violet-600 rounded-full text-lg font-medium"
               >
                 Sign In
               </Link>
