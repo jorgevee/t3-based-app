@@ -49,4 +49,19 @@ export const proprtyRouter = router({
       });
       return updatedProperty;
     }),
+  //get all properties from a user that is logged in
+  myProperties: publicProcedure
+    .input(z.object({ id: string() }))
+    .query(async ({ input }) => {
+      const { id } = input;
+
+      if (!id) throw new TRPCError({ code: 'NOT_FOUND' });
+
+      const properties = await prisma.property.findMany({
+        where: {
+          userId: id,
+        },
+      });
+      return properties;
+    }),
 });

@@ -18,7 +18,7 @@ export default function Property(): JSX.Element {
     const { name, value } = e.target;
     setPropertyData({ ...propertyData, [name]: value });
   };
-  const createMutation = trpc.proprty.update.useMutation();
+  const createMutation = trpc.property.create.useMutation();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     propertyData.userId = session?.user?.id;

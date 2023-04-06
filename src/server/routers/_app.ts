@@ -13,7 +13,7 @@ export const appRouter = router({
   post: postRouter,
   auth: authRouter,
   user: userRouter,
-  proprty: proprtyRouter,
+  property: proprtyRouter,
 });
 
 export type AppRouter = typeof appRouter;
