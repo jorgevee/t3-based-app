@@ -1,12 +1,10 @@
 // Providers for next auth. We will only use credentials provider.
 // Compare this snippet from src\pages\api\auth\[...nextauth].ts:
 import { prisma } from '~/server/prisma';
-import NextAuth, { type NextAuthOptions } from 'next-auth/next';
+import { NextAuthOptions } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { loginSchema } from '~/validation/authVal';
 import { verify } from 'argon2';
-
-const nextAuthUrl = process.env.NEXTAUTH_URL;
 
 export const providers: NextAuthOptions = {
   providers: [

@@ -1,5 +1,5 @@
 import { publicProcedure, router } from '../trpc';
-import { user, name } from '~/validation/authVal';
+import { user } from '~/validation/authVal';
 import { prisma } from '~/server/prisma';
 import { Prisma } from '@prisma/client';
 const defaultUser = Prisma.validator<Prisma.UserArgs>()({
@@ -10,9 +10,6 @@ const defaultUser = Prisma.validator<Prisma.UserArgs>()({
 });
 
 export const userRouter = router({
-  greeting: publicProcedure.input(name).query(async ({ input }) => {
-    return `Hello ${input.name}`;
-  }),
   //create route to create a user
   getAll: publicProcedure.query(async () => {
     const users = await prisma.user.findMany({
