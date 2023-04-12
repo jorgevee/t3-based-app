@@ -29,7 +29,7 @@ const SignUp: NextPage = () => {
       router.push('/dashboard');
       FormData.success = 'User created successfully';
     } catch (error) {
-      FormData.error = error?.data?.message;
+      FormData.error = "Couldn't create user";
       FormData.success = '';
     }
   };
