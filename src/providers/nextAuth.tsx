@@ -5,6 +5,7 @@ import { NextAuthOptions } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { loginSchema } from '~/validation/authVal';
 import { verify } from 'argon2';
+import { JWT } from 'next-auth/jwt';
 
 export const providers: NextAuthOptions = {
   providers: [
@@ -12,14 +13,27 @@ export const providers: NextAuthOptions = {
       name: 'Credentials',
       credentials: {
         email: { label: 'email', type: 'text', placeholder: 'Email' },
-        password: { label: 'password', type: 'password' },
+        password: {
+          label: 'password',
+          type: 'password',
+          placeholder: 'Password',
+        },
       },
       async authorize(credentials) {
         const { email, password } = loginSchema.parse(credentials);
         const user = await prisma.user.findUnique({ where: { email } });
-        if (!user) throw new Error('No user found');
-        const valid = await verify(user.password, password);
-        if (!valid) throw new Error('Invalid password');
+
+        if (!user) {
+          throw new Error('No user found');
+        }
+
+        const userPassword = user.password ?? ''; // Use empty string as default value
+        const valid = await verify(userPassword, password);
+
+        if (!valid) {
+          throw new Error('Invalid password');
+        }
+
         return user;
       },
     }),
@@ -27,22 +41,22 @@ export const providers: NextAuthOptions = {
   secret: process.env.JWT_SECRET,
 
   session: {
-    jwt: true,
+    strategy: 'jwt',
   },
   callbacks: {
-    authorized({ req, token }) {
-      if (token) {
-        return true;
-      }
-    },
     async jwt({ token, user, account, profile, isNewUser }) {
       if (user) {
         token.id = user.id;
       }
       return token;
     },
-    async session({ session, token }) {
-      session.user.id = token.id;
+    async session({ session, token, user }) {
+      try {
+        // session.id = token.id;
+        session.id = token.id as string;
+      } catch (error) {
+        console.error(error);
+      }
       return session;
     },
   },
@@ -53,3 +67,8 @@ export const providers: NextAuthOptions = {
 };
 
 // export default (req, res) => NextAuth(req, res, authProviders);
+declare module 'next-auth' {
+  interface Session {
+    id: string;
+  }
+}

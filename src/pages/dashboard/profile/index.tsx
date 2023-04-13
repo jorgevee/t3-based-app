@@ -4,18 +4,18 @@ import { useState } from 'react';
 import { trpc } from '~/utils/trpc';
 
 type FormData = {
-  name: string | null;
-  email: string | null;
+  name: string;
+  email: string;
   password: string;
 };
 
 export default function DashboardProfile() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const mutation = trpc.user.update.useMutation();
 
   const [formData, setFormData] = useState<FormData>({
-    name: session?.user?.name ?? null,
-    email: session?.user?.email ?? null,
+    name: session?.user?.name ?? '',
+    email: session?.user?.email ?? '',
     password: '',
   });
 
@@ -29,7 +29,7 @@ export default function DashboardProfile() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await mutation.mutateAsync({
-      id: session?.user?.id,
+      id: session?.id ?? '',
       name,
       email,
       password,
