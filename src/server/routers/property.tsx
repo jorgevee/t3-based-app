@@ -9,7 +9,9 @@ import { property } from '~/validation/authVal';
 export const proprtyRouter = router({
   create: publicProcedure.input(property).mutation(async ({ input }) => {
     const newProperty = await prisma.property.create({
-      data: input,
+      data: {
+        ...input,
+      },
     });
     return newProperty;
   }),
