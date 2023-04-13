@@ -12,34 +12,36 @@ import { router, publicProcedure } from '../trpc';
 import { signUpSchema, loginSchema } from '~/validation/authVal';
 import { initTRPC, TRPCError } from '@trpc/server';
 
-const t = initTRPC.context<IContext>().create();
+// const t = initTRPC.context<IContext>().create();
 // Create a new user
-export const authRouter = t.router({
-  signup: t.procedure.input(signUpSchema).mutation(async ({ input, ctx }) => {
-    const { email, password } = input;
+export const authRouter = router({
+  signup: publicProcedure
+    .input(signUpSchema)
+    .mutation(async ({ input, ctx }: any) => {
+      const { email, password } = input;
 
-    const exists = await ctx.prisma.user.findFirst({
-      where: { email },
-    });
-
-    if (exists) {
-      throw new TRPCError({
-        code: 'CONFLICT',
-        message: 'User already exists.',
+      const exists = await ctx.prisma.user.findFirst({
+        where: { email },
       });
-    }
-    //salt the password using argon2
 
-    const hashedPassword = await hash(password);
+      if (exists) {
+        throw new TRPCError({
+          code: 'CONFLICT',
+          message: 'User already exists.',
+        });
+      }
+      //salt the password using argon2
 
-    const result = await ctx.prisma.user.create({
-      data: { email, password: hashedPassword },
-    });
+      const hashedPassword = await hash(password);
 
-    return {
-      status: 201,
-      message: 'Account created successfully',
-      result: result.email,
-    };
-  }),
+      const result = await ctx.prisma.user.create({
+        data: { email, password: hashedPassword },
+      });
+
+      return {
+        status: 201,
+        message: 'Account created successfully',
+        result: result.email,
+      };
+    }),
 });
