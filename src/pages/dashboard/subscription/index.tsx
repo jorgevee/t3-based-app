@@ -22,7 +22,7 @@ const plans = [
     description: 'Ultimate plan',
   },
 ];
-function planCard(plan) {
+function planCard(plan: any) {
   return (
     <div className="flex flex-col items-center justify-center w-full h-full p-4 bg-white rounded-lg shadow-md">
       <p className="text-lg font-semibold text-gray-700">{plan.name}</p>

@@ -17,21 +17,23 @@ export const proprtyRouter = router({
   //get all properties
 
   //get a single property
-  getPropertyById: publicProcedure.input(property).query(async ({ input }) => {
-    const { id } = input;
+  getPropertyById: publicProcedure
+    .input(z.object({ id: string() }).merge(property))
+    .query(async ({ input }) => {
+      const { id } = input;
 
-    if (!id) throw new TRPCError({ code: 'NOT_FOUND' });
+      if (!id) throw new TRPCError({ code: 'NOT_FOUND' });
 
-    const property = await prisma.property.findUnique({
-      where: {
-        id,
-      },
-      include: {
-        user: true,
-      },
-    });
-    return property;
-  }),
+      const property = await prisma.property.findUnique({
+        where: {
+          id,
+        },
+        include: {
+          user: true,
+        },
+      });
+      return property;
+    }),
 
   //update a property
   update: publicProcedure

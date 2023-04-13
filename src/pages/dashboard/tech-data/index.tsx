@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import DLayout from '../dlayout';
-export default function DashboardTechData({ data }) {
+export default function DashboardTechData({ data }: any) {
   return (
     <DLayout title="Tech Data">
       <div className="flex flex-col justify-center items-center p-4 bg-white rounded-lg shadow-md">
@@ -49,7 +49,7 @@ export default function DashboardTechData({ data }) {
   );
 }
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps() {
   const API = 'https://api.coincap.io/v2/assets/bitcoin';
   const res = await fetch(API);
   const data = await res.json();

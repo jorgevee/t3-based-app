@@ -8,7 +8,7 @@ import Hero from '~/components/Hero/Hero';
 import HomeFeatures from '~/components/HomeFeatures';
 
 const IndexPage: NextPageWithLayout = () => {
-  const utils = trpc.useContext();
+  // const utils = trpc.useContext();
 
   // prefetch all posts for instant navigation
   // useEffect(() => {

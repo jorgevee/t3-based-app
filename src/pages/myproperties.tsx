@@ -31,22 +31,20 @@ const loadingCircle = (
 
 export default function MyProperties(): JSX.Element {
   const { data: session } = useSession();
-  const [properties, setProperties] = useState([]);
+  const [properties, setProperties] = useState<any>([]);
 
   const allProperties = trpc.property.myProperties.useQuery(
     {
-      id: session?.user?.id,
+      id: session?.id || '',
     },
     {
       // set loading state when query is in loading state
-      onLoading: () => setLoadingProperties(true),
+      onSettled: () => setLoadingProperties(true),
       // set properties when query is successfully resolved with data
-      onSuccess: (data) => {
-        setProperties(data);
-        setLoadingProperties(false);
-      },
+      onSuccess: (data) => setProperties(data),
     },
   );
+  console.log('properties', properties);
 
   const [loadingProperties, setLoadingProperties] = useState(false);
 
@@ -54,7 +52,7 @@ export default function MyProperties(): JSX.Element {
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-bold mb-4 text-center">My Properties</h1>
       <p className="text-lg mb-8 text-center">
-        Discover all the properties you've created:
+        Discover all the properties you&apos;ve added to your account.
       </p>
       {allProperties.isLoading && loadingCircle}
       {properties?.map((property: any) => (

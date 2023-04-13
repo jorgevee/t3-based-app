@@ -10,7 +10,7 @@ export default function Property(): JSX.Element {
     description: '',
     price: '',
     location: '',
-    userId: session?.user?.id ?? null, // add null fallback value here
+    userId: session?.id ?? '', // add null fallback value here
   });
   console.log('property data:', propertyData);
 
@@ -21,7 +21,7 @@ export default function Property(): JSX.Element {
   const createMutation = trpc.property.create.useMutation();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    propertyData.userId = session?.user?.id;
+    propertyData.userId = session?.id ?? '';
     await createMutation.mutateAsync(propertyData);
   };
   return (
