@@ -5,9 +5,9 @@ import { useSession, signOut, signIn } from 'next-auth/react';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   return (
-    <div className="bg-violet-500">
+    <div className="bg-violet-600">
       <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between flex-wrap">
           <div className="flex items-center flex-shrink-0 text-white mr-6">
@@ -40,10 +40,11 @@ const Header = () => {
             } w-full block flex-grow lg:flex lg:items-center lg:w-auto`}
           >
             <div className="text-sm lg:flex-grow">
-              <Link href="/blog" legacyBehavior>
-                <a className="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
-                  Blog
-                </a>
+              <Link
+                href="/blog"
+                className="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4"
+              >
+                Blog
               </Link>
               <Link href="/about" legacyBehavior>
                 <a className="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">

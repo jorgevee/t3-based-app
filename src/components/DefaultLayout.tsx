@@ -12,6 +12,8 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
       <Head>
         <title>SaaS App</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta name="description" content="A description of the page" />
+        <meta name="keywords" content="some, keywords, for, the, page" />
       </Head>
       <main>
         <Header />

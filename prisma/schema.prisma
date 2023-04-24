@@ -71,7 +71,7 @@ model Property {
   id          String   @id @default(cuid())
   name        String
   description String
-  price       Int
+  price       String
   location    String
   user       User     @relation(fields : [userId], references: [id], onDelete: Cascade)
   userId      String 

@@ -25,11 +25,17 @@ export type Context = trpc.inferAsyncReturnType<typeof createContextInner>;
  * Creates context for an incoming request
  * @link https://trpc.io/docs/context
  */
+
+//add error handling
 export async function createContext(ctx: trpcNext.CreateNextContextOptions) {
-  const { req, res } = ctx;
+  const session = await unstable_getServerSession(ctx.req);
+  // console.log(session);
   return {
-    req,
-    res,
+    ...ctx,
+    req: {
+      ...ctx.req,
+      session,
+    },
     prisma,
   };
 }
