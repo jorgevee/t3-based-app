@@ -12,8 +12,9 @@ const IndexPage: NextPageWithLayout = () => {
   const postsQuery = trpc.post.list.useInfiniteQuery({
     limit: 10,
   });
-  if (postsQuery.error) return <div>{postsQuery.error.message}</div>;
-  console.log('data', postsQuery);
+  if (postsQuery.data?.pages.length === 0) {
+    return <div>No posts found</div>;
+  }
 
   return (
     <Fragment>
