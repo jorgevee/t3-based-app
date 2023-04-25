@@ -1,23 +1,26 @@
 // Create hero component using tailwindcss
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import Image from 'next/image';
+
+const img = '/cometflow-icon-1.png';
 const Hero = (): JSX.Element => {
   const { data: session, status } = useSession();
   return (
     <section className="text-gray-600 body-font">
       <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
-        <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
-          <img
+        <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0 hidden md:block">
+          <Image
             className="object-cover object-center rounded-lg shadow-md"
             alt="hero"
-            src="https://dummyimage.com/720x600"
+            src={img}
+            width={700}
+            height={700}
           />
         </div>
         <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
           <h1 className="title-font sm:text-5xl text-4xl mb-4 font-bold text-gray-900 leading-tight">
-            Your Programmer
-            <br className="hidden lg:inline-block text-blue-500" />
-            Solution
+            Your Programmer Solution
           </h1>
           <p className="mb-8 leading-relaxed text-lg font-medium text-gray-700">
             Use Cometflow to quickly identify and resolve code errors, crashes,

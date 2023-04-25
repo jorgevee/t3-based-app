@@ -28,14 +28,18 @@ export type Context = trpc.inferAsyncReturnType<typeof createContextInner>;
 
 //add error handling
 export async function createContext(ctx: trpcNext.CreateNextContextOptions) {
-  const session = await unstable_getServerSession(ctx.req);
-  // console.log(session);
-  return {
-    ...ctx,
-    req: {
-      ...ctx.req,
-      session,
-    },
-    prisma,
-  };
+  try {
+    const session = await unstable_getServerSession(ctx.req);
+    // console.log(session);
+    return {
+      ...ctx,
+      req: {
+        ...ctx.req,
+        session,
+      },
+      prisma,
+    };
+  } catch (error) {
+    console.error(error);
+  }
 }
